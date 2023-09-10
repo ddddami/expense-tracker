@@ -6,6 +6,7 @@ import {
   Expense,
   deleteExpense,
   getExpenses,
+  addExpense,
 } from "./services/fake-expense-service";
 
 const App = () => {
@@ -22,10 +23,16 @@ const App = () => {
     setExpenses(expenses.filter((e) => e.id !== id));
     deleteExpense(id);
   };
+
   return (
     <div>
       <div className="mb-5">
-        <ExpenseForm />
+        <ExpenseForm
+          onSubmit={(expense) => {
+            setExpenses([{ ...expense, id: expenses.length + 1 }, ...expenses]);
+            addExpense(expense);
+          }}
+        />
       </div>
       <div className="mb-3">
         <ExpenseFilter

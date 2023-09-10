@@ -28,7 +28,7 @@ const deleteExpense = (id: number) => {
 }
 
 const addExpense = (expense: Expense) => {
-    expenses.push(expense)
+    expenses.push({...expense, id: expenses.length+1})
 }
 
 export {getExpenses, getExpense, deleteExpense, addExpense};

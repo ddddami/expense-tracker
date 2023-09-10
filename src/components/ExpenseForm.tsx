@@ -3,6 +3,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { categories } from "../services/categories";
 
+interface Props {
+  onSubmit: (expense: ExpenseFormData) => void;
+}
+
 const schema = z.object({
   description: z
     .string()
@@ -18,15 +22,21 @@ const schema = z.object({
 });
 
 type ExpenseFormData = z.infer<typeof schema>;
-const ExpenseForm = () => {
+const ExpenseForm = ({ onSubmit }: Props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isValid },
   } = useForm<ExpenseFormData>({ resolver: zodResolver(schema) });
   return (
     <div>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form
+        onSubmit={handleSubmit((data) => {
+          onSubmit(data);
+          reset();
+        })}
+      >
         <div className="mb-3">
           <label htmlFor="description" className="form-label">
             Description
@@ -76,7 +86,9 @@ const ExpenseForm = () => {
             <small className="text-danger">{errors.category.message}</small>
           )}
         </div>
-        <button className="btn btn-primary">Submit</button>
+        <button disabled={!isValid} className="btn btn-primary">
+          Submit
+        </button>
       </form>
     </div>
   );
