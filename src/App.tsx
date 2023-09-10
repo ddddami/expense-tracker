@@ -5,10 +5,19 @@ import {
   deleteExpense,
   getExpenses,
 } from "./services/fake-expense-service";
+import ExpenseFilter from "./components/ExpenseFilter";
+
+const categories = ["Groceries", "Utilities", "Entertainment"];
 
 const App = () => {
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [expenses, setExpenses] = useState<Expense[]>([]);
+
   useEffect(() => setExpenses(getExpenses()));
+
+  const visibleExpenses = selectedCategory
+    ? expenses.filter((e) => e.category === selectedCategory)
+    : expenses;
 
   const handleDelete = (id: number) => {
     setExpenses(expenses.filter((e) => e.id !== id));
@@ -16,7 +25,13 @@ const App = () => {
   };
   return (
     <div>
-      <ExpenseList expenses={expenses} onDelete={handleDelete} />
+      <div className="mb-3">
+        <ExpenseFilter
+          categories={categories}
+          onSelectCategory={(category: string) => setSelectedCategory(category)}
+        />
+      </div>
+      <ExpenseList expenses={visibleExpenses} onDelete={handleDelete} />
     </div>
   );
 };
