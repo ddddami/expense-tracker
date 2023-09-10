@@ -8,8 +8,6 @@ import {
   getExpenses,
 } from "./services/fake-expense-service";
 
-const categories = ["Groceries", "Utilities", "Entertainment"];
-
 const App = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -27,11 +25,10 @@ const App = () => {
   return (
     <div>
       <div className="mb-5">
-        <ExpenseForm categories={categories} />
+        <ExpenseForm />
       </div>
       <div className="mb-3">
         <ExpenseFilter
-          categories={categories}
           onSelectCategory={(category: string) => setSelectedCategory(category)}
         />
       </div>
