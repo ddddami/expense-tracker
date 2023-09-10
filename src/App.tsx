@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import ExpenseList from "./components/ExpenseList";
+import ExpenseForm from "./components/ExpenseForm";
+import ExpenseFilter from "./components/ExpenseFilter";
 import {
   Expense,
   deleteExpense,
   getExpenses,
 } from "./services/fake-expense-service";
-import ExpenseFilter from "./components/ExpenseFilter";
 
 const categories = ["Groceries", "Utilities", "Entertainment"];
 
@@ -25,6 +26,9 @@ const App = () => {
   };
   return (
     <div>
+      <div className="mb-5">
+        <ExpenseForm categories={categories} />
+      </div>
       <div className="mb-3">
         <ExpenseFilter
           categories={categories}
