@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ExpenseList from "./components/ExpenseList";
 import ExpenseForm from "./components/ExpenseForm";
 import ExpenseFilter from "./components/ExpenseFilter";
+import LoginForm from "./components/LoginForm";
 import {
   Expense,
   deleteExpense,
@@ -26,24 +27,7 @@ const App = () => {
 
   return (
     <div>
-      <div className="mb-5">
-        <ExpenseForm
-          onSubmit={(data) => {
-            const newExpense = {
-              id: expenses.length + 1,
-              ...data,
-            };
-            setExpenses([...expenses, newExpense]);
-            addExpense(data);
-          }}
-        />
-      </div>
-      <div className="mb-3">
-        <ExpenseFilter
-          onSelectCategory={(category: string) => setSelectedCategory(category)}
-        />
-      </div>
-      <ExpenseList expenses={visibleExpenses} onDelete={handleDelete} />
+      <LoginForm />
     </div>
   );
 };

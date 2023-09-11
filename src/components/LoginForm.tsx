@@ -1,19 +1,41 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const schema = z.object({
+  username: z.string().email().max(255),
+  password: z.string().min(6, { message: "Enter a valid password" }).max(255),
+});
+
+type LoginFormData = z.infer<typeof schema>;
 
 const LoginForm = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<LoginFormData>({ resolver: zodResolver(schema) });
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
+    <form
+      onSubmit={handleSubmit((data) => {
+        console.log(data);
+        reset();
+      })}
+    >
       <div className="mb-3">
         <label htmlFor="username" className="form-label">
           Username
         </label>
         <input
           {...register("username")}
-          type="text"
+          type="email"
           className="form-control"
           id="username"
         />
+        {errors.username && (
+          <small className="text-danger">{errors.username.message}</small>
+        )}
       </div>
       <div className="mb-3">
         <label htmlFor="password" className="form-label">
@@ -24,8 +46,13 @@ const LoginForm = () => {
           className="form-control"
           id="password"
         />
+        {errors.password && (
+          <small className="text-danger">{errors.password.message}</small>
+        )}
       </div>
-      <button className="btn btn-primary">Login</button>
+      <button disabled={!isValid} className="btn btn-primary">
+        Login
+      </button>
     </form>
   );
 };
