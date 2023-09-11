@@ -27,7 +27,7 @@ const RegisterForm = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({ resolver: zodResolver(schema) });
   return (
     <form
@@ -36,6 +36,7 @@ const RegisterForm = () => {
         reset();
       })}
     >
+      <h2>Register</h2>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">
           Name
@@ -87,7 +88,7 @@ const RegisterForm = () => {
           <small className="text-danger">{errors.password2.message}</small>
         )}
       </div>
-      <button disabled={isSubmitting || !isValid} className="btn btn-primary">
+      <button disabled={isSubmitting} className="btn btn-primary">
         Register
       </button>
     </form>

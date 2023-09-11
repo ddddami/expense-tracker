@@ -23,6 +23,7 @@ const LoginForm = () => {
         reset();
       })}
     >
+      <h2>Login</h2>
       <div className="mb-3">
         <label htmlFor="username" className="form-label">
           Username
@@ -50,7 +51,7 @@ const LoginForm = () => {
           <small className="text-danger">{errors.password.message}</small>
         )}
       </div>
-      <button disabled={isSubmitting} className="btn btn-primary">
+      <button disabled={isSubmitting || !isValid} className="btn btn-primary">
         Login
       </button>
     </form>
