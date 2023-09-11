@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { categories } from "../services/categories";
+import categories from "../services/categories";
 
 interface Props {
   onSubmit: (expense: ExpenseFormData) => void;

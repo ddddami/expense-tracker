@@ -28,9 +28,13 @@ const App = () => {
     <div>
       <div className="mb-5">
         <ExpenseForm
-          onSubmit={(expense) => {
-            setExpenses([{ ...expense, id: expenses.length + 1 }, ...expenses]);
-            addExpense(expense);
+          onSubmit={(data) => {
+            const newExpense = {
+              id: expenses.length + 1,
+              ...data,
+            };
+            setExpenses([...expenses, newExpense]);
+            addExpense(data);
           }}
         />
       </div>
