@@ -14,7 +14,7 @@ const LoginForm = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<LoginFormData>({ resolver: zodResolver(schema) });
   return (
     <form
@@ -50,7 +50,7 @@ const LoginForm = () => {
           <small className="text-danger">{errors.password.message}</small>
         )}
       </div>
-      <button disabled={!isValid} className="btn btn-primary">
+      <button disabled={isSubmitting} className="btn btn-primary">
         Login
       </button>
     </form>
