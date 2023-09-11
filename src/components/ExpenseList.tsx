@@ -1,4 +1,4 @@
-import { Expense } from "../services/fake-expense-service";
+import { Expense } from "../services/expense-service";
 
 interface Props {
   expenses: Expense[];
