@@ -4,8 +4,7 @@ import ExpenseForm from "./components/ExpenseForm";
 import ExpenseFilter from "./components/ExpenseFilter";
 import ExpenseService, { Expense } from "./services/expense-service";
 
-import Login from "./components/LoginForm";
-import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
 
 const App = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -51,7 +50,7 @@ const App = () => {
   //     <ExpenseList expenses={visibleExpenses} onDelete={handleDelete} />
   //   </div>
   // );
-  return <LoginForm />;
+  return <RegisterForm />;
 };
 
 export default App;

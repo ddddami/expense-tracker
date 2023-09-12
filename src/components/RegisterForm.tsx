@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import userService from "../services/user-service";
+import { setToken } from "../services/auth-service";
 
 const schema = z
   .object({
@@ -29,13 +31,18 @@ const RegisterForm = () => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({ resolver: zodResolver(schema) });
-  return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        console.log(data);
+
+  const doSubmit = (data: RegisterFormData) => {
+    userService
+      .registerUser(data.name, data.username, data.password1, data.password2)
+      .then((res) => {
         reset();
-      })}
-    >
+        setToken(res.data.token);
+      })
+      .catch((err) => console.log(err));
+  };
+  return (
+    <form onSubmit={handleSubmit(doSubmit)}>
       <h2>Register</h2>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">
