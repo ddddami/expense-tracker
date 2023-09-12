@@ -1,5 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:8000/api",
+});
 
-export default axios.create({
-    baseURL: 'http://localhost:8000/api',
-})
+export function setAuthHeader(token: string | null) {
+  if (token)
+    axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
+}
+
+export default axiosInstance;

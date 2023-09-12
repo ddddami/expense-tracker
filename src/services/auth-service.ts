@@ -1,6 +1,8 @@
-import apiClient from "./api-client";
+import apiClient, { setAuthHeader } from "./api-client";
 
 const tokenKey = "token";
+
+setAuthHeader(getToken());
 
 export function login(username: string, password: string) {
   return apiClient.post("/login", { email: username, password });
