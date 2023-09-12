@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { login, setToken } from "../services/auth-service";
 
 const schema = z.object({
   username: z.string().email().max(255),
@@ -16,10 +17,16 @@ const LoginForm = () => {
     reset,
     formState: { errors, isValid, isSubmitting },
   } = useForm<LoginFormData>({ resolver: zodResolver(schema) });
+
+  const doSubmit = (data: LoginFormData) => {
+    login(data.username, data.password)
+      .then((res) => setToken(res.data.token))
+      .catch((ex) => console.log(ex));
+  };
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        console.log(data);
+        doSubmit(data);
         reset();
       })}
     >
