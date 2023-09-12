@@ -3,14 +3,27 @@ import ExpenseList from "./components/ExpenseList";
 import ExpenseForm from "./components/ExpenseForm";
 import ExpenseFilter from "./components/ExpenseFilter";
 import ExpenseService, { Expense } from "./services/expense-service";
+import UserContext from "./contexts/UserContext";
 
 import RegisterForm from "./components/RegisterForm";
 import NavBar from "./components/NavBar";
+import userService from "./services/user-service";
+
+interface User {
+  id: number;
+  name: string;
+}
 
 const App = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [user, setUser] = useState<null | User>(null);
 
+  useEffect(() => {
+    userService
+      .getUser()
+      .then((res) => setUser({ id: res.data.id, name: res.data.name }));
+  }, []);
   useEffect(() => {
     ExpenseService.getAllExpenses()
       .then((res) => setExpenses(res.data))
@@ -53,8 +66,10 @@ const App = () => {
   // );
   return (
     <>
-      <NavBar />
-      <RegisterForm />
+      <UserContext.Provider value={{ user, setUser }}>
+        <NavBar />
+        <RegisterForm />
+      </UserContext.Provider>
     </>
   );
 };
