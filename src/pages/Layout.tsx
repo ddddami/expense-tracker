@@ -1,9 +1,10 @@
-import { useEffect, useState, useContext } from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import { Ring } from "@uiball/loaders";
+import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar";
-
 import UserContext from "../contexts/UserContext";
 import userService from "../services/user-service";
+import { getToken } from "../services/auth-service";
 
 interface User {
   id: number;
@@ -28,8 +29,10 @@ const Layout = () => {
     <UserContext.Provider value={{ user, setUser }}>
       <>
         <NavBar />
-        {isLoading ? (
-          <div>Loading...</div>
+        {getToken() && isLoading ? (
+          <div className="m-auto w-50 p-5 text-center">
+            <Ring size={40} lineWeight={5} speed={2} color="black" />
+          </div>
         ) : (
           <main className="container mt-4">
             <Outlet />

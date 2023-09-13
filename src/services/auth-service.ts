@@ -16,6 +16,6 @@ export function setToken(token: string) {
   localStorage.setItem(tokenKey, token);
 }
 
-function getToken() {
+export function getToken() {
   return localStorage.getItem(tokenKey);
 }
