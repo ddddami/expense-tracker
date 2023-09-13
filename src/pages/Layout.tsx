@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Outlet, Navigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import userService from "../services/user-service";
+
 import UserContext from "../contexts/UserContext";
+import userService from "../services/user-service";
 
 interface User {
   id: number;
@@ -10,21 +11,31 @@ interface User {
 }
 
 const Layout = () => {
+  const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState<null | User>(null);
   useEffect(() => {
     userService
       .getUser()
       .then((res) => {
+        setLoading(true);
         setUser(res.data);
+        setLoading(false);
       })
-      .catch();
+      .catch((ex) => setLoading(false));
   }, []);
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <NavBar />
-      <main className="container mt-4">
-        <Outlet />
-      </main>
+      <>
+        <NavBar />
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <main className="container mt-4">
+            <Outlet />
+          </main>
+        )}
+      </>
     </UserContext.Provider>
   );
 };

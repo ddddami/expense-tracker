@@ -20,7 +20,10 @@ const LoginForm = () => {
 
   const doSubmit = (data: LoginFormData) => {
     login(data.username, data.password)
-      .then((res) => setToken(res.data.token))
+      .then((res) => {
+        setToken(res.data.token);
+        window.location.href = "/home";
+      })
       .catch((ex) => console.log(ex));
   };
   return (
