@@ -1,15 +1,16 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import LoginForm from "./components/LoginForm";
-import RegisterForm from "./components/RegisterForm";
 import Layout from "./pages/Layout";
 import HomePage from "./pages/HomePage";
 import PrivateRoutes from "./pages/PrivateRoutes";
+import ErrorPage from "./pages/ErrorPage";
+import RegisterForm from "./components/RegisterForm";
+import LoginForm from "./components/LoginForm";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Navigate to="/home" /> },
 
